@@ -1,4 +1,3 @@
-// Анимированный фон с единицами и нулями
 const canvas = document.getElementById('matrix-bg');
 const ctx = canvas.getContext('2d');
 
@@ -12,7 +11,7 @@ window.addEventListener('resize', resizeCanvas);
 
 const chars = '01';
 const charArray = chars.split('');
-const fontSize = 18; // Увеличил шрифт на 2pt
+const fontSize = 16;
 const columns = canvas.width / fontSize;
 const drops = [];
 
@@ -24,7 +23,6 @@ function drawMatrix() {
     ctx.fillStyle = 'rgba(10, 10, 10, 0.05)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     
-    // Красный градиент для glow эффекта
     const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
     gradient.addColorStop(0, 'rgba(255, 51, 51, 0.9)');
     gradient.addColorStop(0.2, 'rgba(255, 102, 102, 0.8)');
@@ -50,16 +48,13 @@ function drawMatrix() {
         drops[i]++;
     }
     
-    // Сбрасываем shadow для следующего кадра
     ctx.shadowBlur = 0;
 }
 
 setInterval(drawMatrix, 35);
 
-// Переключение вкладок
 document.querySelectorAll('.tab-button').forEach(button => {
     button.addEventListener('click', () => {
-        // Убираем активный класс у всех кнопок и вкладок
         document.querySelectorAll('.tab-button').forEach(btn => {
             btn.classList.remove('active');
         });
@@ -67,22 +62,18 @@ document.querySelectorAll('.tab-button').forEach(button => {
             content.classList.remove('active');
         });
         
-        // Добавляем активный класс к нажатой кнопке и соответствующей вкладке
         button.classList.add('active');
         const tabId = button.getAttribute('data-tab');
         document.getElementById(tabId).classList.add('active');
     });
 });
 
-// Фильтрация проектов по категориям
 document.querySelectorAll('.category-button').forEach(button => {
     button.addEventListener('click', () => {
-        // Убираем активный класс у всех кнопок категорий
         document.querySelectorAll('.category-button').forEach(btn => {
             btn.classList.remove('active');
         });
         
-        // Добавляем активный класс к нажатой кнопке
         button.classList.add('active');
         
         const category = button.getAttribute('data-category');
@@ -96,4 +87,5 @@ document.querySelectorAll('.category-button').forEach(button => {
             }
         });
     });
+
 });
