@@ -168,7 +168,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    max-width: 400px;
+    max-width: 350px;
     margin: 0 auto;
 }
 
@@ -313,6 +313,10 @@ body {
     margin-bottom: 15px;
 }
 
+.project-card em {
+    color: #666;
+}
+
 .project-link {
     color: #ff9999;
     text-decoration: none;
@@ -401,4 +405,3 @@ body {
         padding: 5px 10px;
     }
 }
-
