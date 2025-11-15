@@ -24,9 +24,7 @@ This project is built with pure frontend technologies for simplicity and speed:
 
 ## 🚀 Live Demo
 
-The website is automatically deployed via GitHub Pages and is available at:  
-**[https://kyreesemm.github.io/bio](https://kyreesemm.github.io/bio)**  
-*(Replace the link with your actual GitHub Pages URL)*
+The website is automatically deployed via GitHub Pages and is available at: **[https://kyreesemm.github.io/bio](https://kyreesemm.github.io/bio)**
 
 ## 📄 License
 
