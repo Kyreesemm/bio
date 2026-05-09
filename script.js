@@ -1,53 +1,96 @@
 const canvas = document.getElementById('matrix-bg');
 const ctx = canvas.getContext('2d');
 
-function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-}
-
-resizeCanvas();
-window.addEventListener('resize', resizeCanvas);
-
 const chars = '01';
 const charArray = chars.split('');
 const fontSize = 16;
-const columns = canvas.width / fontSize;
+let columns = Math.floor(window.innerWidth / fontSize);
 const drops = [];
+const glowChars = [];
 
-for (let i = 0; i < columns; i++) {
-    drops[i] = Math.random() * -100;
+function initDrops() {
+    for (let i = 0; i < columns; i++) {
+        if (drops[i] === undefined) {
+            drops[i] = Math.random() * -100;
+            glowChars[i] = {
+                active: false,
+                intensity: 0,
+                nextGlow: Math.random() * 200 + 100
+            };
+        }
+    }
 }
 
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const newColumns = Math.floor(window.innerWidth / fontSize);
+    if (newColumns !== columns) {
+        columns = newColumns;
+        initDrops();
+    }
+}
+
+resizeCanvas();
+initDrops();
+window.addEventListener('resize', resizeCanvas);
+
 function drawMatrix() {
-    ctx.fillStyle = 'rgba(10, 10, 10, 0.05)';
+    ctx.fillStyle = 'rgba(10, 10, 10, 0.08)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
-    const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-    gradient.addColorStop(0, 'rgba(255, 51, 51, 0.9)');
-    gradient.addColorStop(0.2, 'rgba(255, 102, 102, 0.8)');
-    gradient.addColorStop(0.4, 'rgba(255, 153, 153, 0.7)');
-    gradient.addColorStop(0.7, 'rgba(255, 102, 102, 0.4)');
-    gradient.addColorStop(1, 'transparent');
-    
-    ctx.fillStyle = gradient;
+
     ctx.font = `bold ${fontSize}px monospace`;
-    ctx.shadowBlur = 15;
-    ctx.shadowColor = '#ff3333';
 
     for (let i = 0; i < drops.length; i++) {
         const text = charArray[Math.floor(Math.random() * charArray.length)];
         const x = i * fontSize;
         const y = drops[i] * fontSize;
-        
+
+        const progress = Math.min(drops[i] / (canvas.height / fontSize), 1);
+
+        if (glowChars[i].nextGlow <= 0) {
+            glowChars[i].active = true;
+            glowChars[i].intensity = 1;
+            glowChars[i].nextGlow = Math.random() * 300 + 150;
+        }
+
+        if (glowChars[i].active) {
+            glowChars[i].intensity -= 0.02;
+            if (glowChars[i].intensity <= 0) {
+                glowChars[i].active = false;
+            }
+        }
+
+        glowChars[i].nextGlow--;
+
+        if (glowChars[i].active && glowChars[i].intensity > 0) {
+            const glowIntensity = glowChars[i].intensity;
+            ctx.shadowBlur = 20 * glowIntensity;
+            ctx.shadowColor = `rgba(255, 51, 51, ${glowIntensity})`;
+            ctx.fillStyle = `rgba(255, ${51 + 100 * glowIntensity}, ${51 + 100 * glowIntensity}, ${0.9 + 0.1 * glowIntensity})`;
+        } else {
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = 'rgba(255, 51, 51, 0.3)';
+
+            if (progress < 0.2) {
+                ctx.fillStyle = `rgba(255, 51, 51, ${0.9 * (progress / 0.2)})`;
+            } else if (progress < 0.5) {
+                ctx.fillStyle = 'rgba(255, 102, 102, 0.8)';
+            } else if (progress < 0.8) {
+                ctx.fillStyle = 'rgba(255, 153, 153, 0.6)';
+            } else {
+                ctx.fillStyle = `rgba(255, 102, 102, ${0.4 * (1 - progress)})`;
+            }
+        }
+
         ctx.fillText(text, x, y);
-        
+
         if (y > canvas.height && Math.random() > 0.975) {
             drops[i] = 0;
         }
         drops[i]++;
     }
-    
+
     ctx.shadowBlur = 0;
 }
 

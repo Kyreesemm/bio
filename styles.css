@@ -168,63 +168,103 @@ body {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    max-width: 350px;
+    max-width: 400px;
     margin: 0 auto;
 }
 
 .link-button {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     background: rgba(60, 60, 60, 0.9);
     color: #e0e0e0;
     text-decoration: none;
-    padding: 15px 20px;
-    border-radius: 10px;
+    padding: 16px 24px;
+    border-radius: 12px;
     transition: all 0.3s ease;
     backdrop-filter: blur(10px);
-    border: 1px solid transparent;
+    border: 2px solid rgba(100, 100, 100, 0.3);
     position: relative;
-    margin: 0 20px;
-}
-
-.link-button::before {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    background: linear-gradient(45deg, #666, #999, #ccc, #999, #666);
-    background-size: 400% 400%;
-    border-radius: 12px;
-    z-index: -1;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    animation: gradientBorder 3s ease infinite;
-}
-
-.link-button:hover::before {
-    opacity: 1;
-}
-
-@keyframes gradientBorder {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    font-size: 1.05rem;
+    font-weight: 500;
 }
 
 .link-button:hover {
-    background: rgba(80, 80, 80, 0.9);
+    background: rgba(70, 70, 70, 0.95);
     transform: translateY(-3px);
-    box-shadow: 0 7px 15px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
 }
 
 .link-icon {
-    width: 24px;
-    height: 24px;
-    margin-right: 10px;
-    filter: invert(0.8);
+    width: 28px;
+    height: 28px;
+    margin-right: 14px;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.link-button:hover .link-icon {
+    transform: scale(1.1);
+}
+
+.link-text {
+    flex: 1;
+}
+
+.link-button.youtube {
+    border-color: rgba(255, 0, 0, 0.4);
+}
+
+.link-button.youtube:hover {
+    border-color: rgba(255, 0, 0, 0.7);
+    box-shadow: 0 8px 20px rgba(255, 0, 0, 0.3);
+}
+
+.link-button.youtube .link-icon {
+    filter: none;
+    color: #FF0000;
+}
+
+.link-button.telegram {
+    border-color: rgba(36, 161, 222, 0.4);
+}
+
+.link-button.telegram:hover {
+    border-color: rgba(36, 161, 222, 0.7);
+    box-shadow: 0 8px 20px rgba(36, 161, 222, 0.3);
+}
+
+.link-button.telegram .link-icon {
+    filter: none;
+    color: #24A1DE;
+}
+
+.link-button.github {
+    border-color: rgba(136, 136, 136, 0.4);
+}
+
+.link-button.github:hover {
+    border-color: rgba(200, 200, 200, 0.7);
+    box-shadow: 0 8px 20px rgba(136, 136, 136, 0.3);
+}
+
+.link-button.github .link-icon {
+    filter: none;
+    color: #888888;
+}
+
+.link-button.tiktok {
+    border-color: rgba(255, 0, 80, 0.4);
+}
+
+.link-button.tiktok:hover {
+    border-color: rgba(255, 0, 80, 0.7);
+    box-shadow: 0 8px 20px rgba(255, 0, 80, 0.3);
+}
+
+.link-button.tiktok .link-icon {
+    filter: none;
+    color: #FF0050;
 }
 
 .info-content {
@@ -388,12 +428,19 @@ body {
     }
 
     .links {
-        max-width: 300px;
+        max-width: 100%;
+        padding: 0 10px;
     }
-    
+
     .link-button {
-        margin: 0 10px;
-        padding: 12px 15px;
+        padding: 14px 20px;
+        font-size: 1rem;
+    }
+
+    .link-icon {
+        width: 26px;
+        height: 26px;
+        margin-right: 12px;
     }
     
     .bio-tags {
