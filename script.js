@@ -84,7 +84,7 @@ function drawMatrix() {
 
         ctx.fillText(text, x, y);
 
-        if (y > canvas.height + fontSize && Math.random() > 0.975) {
+        if (y > canvas.height + fontSize * 2 && Math.random() > 0.975) {
             drops[i] = 0;
         }
         drops[i]++;
