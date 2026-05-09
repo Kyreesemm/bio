@@ -3,7 +3,7 @@ const ctx = canvas.getContext('2d');
 
 const chars = '01';
 const charArray = chars.split('');
-const fontSize = 16;
+const fontSize = 14;
 let columns = Math.floor(window.innerWidth / fontSize);
 const drops = [];
 const glowChars = [];
@@ -46,8 +46,6 @@ function drawMatrix() {
         const x = i * fontSize;
         const y = drops[i] * fontSize;
 
-        const progress = Math.min(drops[i] / (canvas.height / fontSize), 1);
-
         if (glowChars[i].nextGlow <= 0) {
             glowChars[i].active = true;
             glowChars[i].intensity = 1;
@@ -71,6 +69,7 @@ function drawMatrix() {
         } else {
             ctx.shadowBlur = 8;
             ctx.shadowColor = 'rgba(255, 51, 51, 0.3)';
+            const progress = Math.min(y / canvas.height, 1);
 
             if (progress < 0.2) {
                 ctx.fillStyle = `rgba(255, 51, 51, ${0.9 * (progress / 0.2)})`;
@@ -85,7 +84,7 @@ function drawMatrix() {
 
         ctx.fillText(text, x, y);
 
-        if (y > canvas.height && Math.random() > 0.975) {
+        if (y > canvas.height + fontSize && Math.random() > 0.975) {
             drops[i] = 0;
         }
         drops[i]++;

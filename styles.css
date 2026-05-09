@@ -14,6 +14,28 @@ body {
     overflow-x: hidden;
 }
 
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 51, 51, 0.6);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 51, 51, 0.8);
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 51, 51, 0.6) transparent;
+}
+
 #matrix-bg {
     position: fixed;
     top: 0;
@@ -168,37 +190,105 @@ body {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    max-width: 400px;
+    max-width: 350px;
     margin: 0 auto;
 }
 
 .link-button {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
     background: rgba(60, 60, 60, 0.9);
     color: #e0e0e0;
     text-decoration: none;
-    padding: 16px 24px;
-    border-radius: 12px;
+    padding: 15px 20px;
+    border-radius: 10px;
     transition: all 0.3s ease;
     backdrop-filter: blur(10px);
-    border: 2px solid rgba(100, 100, 100, 0.3);
+    border: 2px solid transparent;
     position: relative;
-    font-size: 1.05rem;
+    font-size: 1rem;
     font-weight: 500;
 }
 
+.link-button::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 12px;
+    z-index: -1;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.link-button.youtube::before {
+    background: linear-gradient(45deg, #FF0000, #FF3333, #FF6666, #FF3333, #FF0000);
+    background-size: 400% 400%;
+    animation: gradientBorder 3s ease infinite;
+}
+
+.link-button.telegram::before {
+    background: linear-gradient(45deg, #24A1DE, #4DB8E8, #76CFF2, #4DB8E8, #24A1DE);
+    background-size: 400% 400%;
+    animation: gradientBorder 3s ease infinite;
+}
+
+.link-button.github::before {
+    background: linear-gradient(45deg, #666, #888, #aaa, #888, #666);
+    background-size: 400% 400%;
+    animation: gradientBorder 3s ease infinite;
+}
+
+.link-button.tiktok::before {
+    background: linear-gradient(45deg, #FF0050, #FF3366, #FF6688, #FF3366, #FF0050);
+    background-size: 400% 400%;
+    animation: gradientBorder 3s ease infinite;
+}
+
+@keyframes gradientBorder {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.link-button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(100, 100, 100, 0.1), rgba(150, 150, 150, 0.2), rgba(200, 200, 200, 0.3), rgba(150, 150, 150, 0.2), rgba(100, 100, 100, 0.1));
+    background-size: 400% 400%;
+    border-radius: 10px;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    animation: gradientShine 3s ease infinite;
+}
+
+@keyframes gradientShine {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.link-button:hover::after {
+    opacity: 1;
+}
+
 .link-button:hover {
-    background: rgba(70, 70, 70, 0.95);
     transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 7px 15px rgba(0, 0, 0, 0.4);
 }
 
 .link-icon {
-    width: 28px;
-    height: 28px;
-    margin-right: 14px;
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
     flex-shrink: 0;
     transition: transform 0.3s ease;
 }
@@ -208,16 +298,7 @@ body {
 }
 
 .link-text {
-    flex: 1;
-}
-
-.link-button.youtube {
-    border-color: rgba(255, 0, 0, 0.4);
-}
-
-.link-button.youtube:hover {
-    border-color: rgba(255, 0, 0, 0.7);
-    box-shadow: 0 8px 20px rgba(255, 0, 0, 0.3);
+    display: inline;
 }
 
 .link-button.youtube .link-icon {
@@ -225,41 +306,14 @@ body {
     color: #FF0000;
 }
 
-.link-button.telegram {
-    border-color: rgba(36, 161, 222, 0.4);
-}
-
-.link-button.telegram:hover {
-    border-color: rgba(36, 161, 222, 0.7);
-    box-shadow: 0 8px 20px rgba(36, 161, 222, 0.3);
-}
-
 .link-button.telegram .link-icon {
     filter: none;
     color: #24A1DE;
 }
 
-.link-button.github {
-    border-color: rgba(136, 136, 136, 0.4);
-}
-
-.link-button.github:hover {
-    border-color: rgba(200, 200, 200, 0.7);
-    box-shadow: 0 8px 20px rgba(136, 136, 136, 0.3);
-}
-
 .link-button.github .link-icon {
     filter: none;
     color: #888888;
-}
-
-.link-button.tiktok {
-    border-color: rgba(255, 0, 80, 0.4);
-}
-
-.link-button.tiktok:hover {
-    border-color: rgba(255, 0, 80, 0.7);
-    box-shadow: 0 8px 20px rgba(255, 0, 80, 0.3);
 }
 
 .link-button.tiktok .link-icon {
@@ -433,14 +487,14 @@ body {
     }
 
     .link-button {
-        padding: 14px 20px;
-        font-size: 1rem;
+        padding: 12px 15px;
+        font-size: 0.95rem;
     }
 
     .link-icon {
-        width: 26px;
-        height: 26px;
-        margin-right: 12px;
+        width: 22px;
+        height: 22px;
+        margin-right: 10px;
     }
     
     .bio-tags {
